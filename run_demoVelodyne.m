@@ -40,7 +40,8 @@ P_velo_to_img = calib.P_rect{cam+1}*R_cam_to_rect*Tr_velo_to_cam;
 img = imread(sprintf('%s/image_%02d/data/%010d.png',base_dir,cam,frame));
 fig = figure('Position',[20 100 size(img,2) size(img,1)]);
 axes('Position',[0 0 1 1]);
-imshow(img); hold on;
+imshow(img);
+hold on;
 
 % load velodyne points
 fid = fopen(sprintf('%s/velodyne_points/data/%010d.bin',base_dir,frame),'rb');	%先以二进制方式打开
@@ -57,11 +58,11 @@ velo_img = project(velo(:,1:3),P_velo_to_img);
 
 % plot points，彩色
 
-cols = jet;
-for i=1:size(velo_img,1)
-  col_idx = round(64*5/velo(i,1));
-  plot(velo_img(i,1),velo_img(i,2),'o','LineWidth',4,'MarkerSize',1,'Color',cols(col_idx,:));
-end
+ cols = jet;
+% for i=1:size(velo_img,1)
+  col_idx = round(64*5/velo(:,1));
+  plot(velo_img(:,1),velo_img(:,2),'o');
+% end
 
 % plot points，灰色
 
